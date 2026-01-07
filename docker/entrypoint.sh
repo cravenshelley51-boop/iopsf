@@ -13,6 +13,20 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate --force
 fi
 
+# Verify Vite build assets exist and set APP_URL if not set
+if [ -z "$APP_URL" ]; then
+    echo "Warning: APP_URL not set. Asset URLs may be incorrect."
+fi
+
+# Verify build assets
+if [ ! -d "public/build" ]; then
+    echo "Error: public/build directory does not exist!"
+elif [ ! -f "public/build/.vite/manifest.json" ] && [ ! -f "public/build/manifest.json" ]; then
+    echo "Warning: Vite manifest.json not found. CSS/JS may not load correctly."
+    echo "Contents of public/build:"
+    ls -la public/build/ 2>/dev/null || echo "Directory is empty or inaccessible"
+fi
+
 # Ensure database directory exists and is writable
 mkdir -p database
 chown -R www-data:www-data database

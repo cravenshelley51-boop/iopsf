@@ -4,7 +4,10 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+# Build assets for production
 RUN npm run build
+# Verify build output
+RUN ls -la public/build/ || echo "Build directory check"
 
 # Stage 2 - Backend (Laravel + PHP + Composer)
 FROM php:8.2-fpm AS backend
@@ -40,7 +43,13 @@ WORKDIR /var/www
 COPY . .
 
 # Copy built frontend from Stage 1 (Laravel Vite outputs to public/build)
-COPY --from=frontend /app/public/build ./public/build
+# Copy the entire public/build directory structure including .vite subdirectory and manifest
+COPY --from=frontend --chown=www-data:www-data /app/public/build ./public/build
+
+# Verify build assets were copied correctly
+RUN ls -la public/build/ 2>/dev/null && \
+    (test -f public/build/.vite/manifest.json || test -f public/build/manifest.json || echo "Warning: Vite manifest not found") || \
+    echo "Warning: public/build directory may be empty"
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
