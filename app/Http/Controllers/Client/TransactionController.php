@@ -13,21 +13,20 @@ class TransactionController extends Controller
 {
     public function __construct(
         private readonly AuditService $auditService
-    ) {}
+    ) {
+    }
 
     public function index(): View
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId'=>'debug-session','runId'=>'run1','hypothesisId'=>'A','location'=>'Client/TransactionController.php:18','message'=>'Transactions index method called','data'=>['userId'=>auth()->id()],'timestamp'=>time()*1000])."\n", FILE_APPEND);
-        // #endregion
-        
+
+
+
         $transactions = Transaction::where('user_id', auth()->id())
             ->latest()
             ->paginate(10);
 
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId'=>'debug-session','runId'=>'run1','hypothesisId'=>'A','location'=>'Client/TransactionController.php:24','message'=>'Transactions retrieved','data'=>['count'=>$transactions->count()],'timestamp'=>time()*1000])."\n", FILE_APPEND);
-        // #endregion
+
+
 
         return view('client.transactions.index', compact('transactions'));
     }
@@ -69,4 +68,4 @@ class TransactionController extends Controller
         $this->authorize('view', $transaction);
         return view('client.transactions.show', compact('transaction'));
     }
-} 
+}

@@ -14,22 +14,21 @@ class DocumentController extends Controller
 {
     public function __construct(
         private readonly AuditService $auditService
-    ) {}
+    ) {
+    }
 
     public function index(): View
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId'=>'debug-session','runId'=>'run1','hypothesisId'=>'C','location'=>'Client/DocumentController.php:19','message'=>'Documents index method called','data'=>['userId'=>auth()->id()],'timestamp'=>time()*1000])."\n", FILE_APPEND);
-        // #endregion
-        
+
+
+
         $documents = Document::where('user_id', auth()->id())
             ->with(['requestedBy', 'approvedBy'])
             ->latest()
             ->paginate(10);
 
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId'=>'debug-session','runId'=>'run1','hypothesisId'=>'C','location'=>'Client/DocumentController.php:25','message'=>'Documents retrieved','data'=>['count'=>$documents->count()],'timestamp'=>time()*1000])."\n", FILE_APPEND);
-        // #endregion
+
+
 
         return view('client.documents.index', compact('documents'));
     }
@@ -76,11 +75,11 @@ class DocumentController extends Controller
     public function download(Document $document)
     {
         $this->authorize('view', $document);
-        
+
         if (!Storage::disk('public')->exists($document->file_path)) {
             abort(404, 'File not found');
         }
-        
+
         return response()->download(storage_path('app/public/' . $document->file_path));
     }
 
@@ -94,4 +93,4 @@ class DocumentController extends Controller
         return redirect()->route('client.documents.index')
             ->with('success', 'Document deleted successfully.');
     }
-} 
+}

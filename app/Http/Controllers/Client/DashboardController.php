@@ -15,16 +15,14 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'B', 'location' => 'Client/DashboardController.php:15', 'message' => 'Dashboard index method called', 'data' => ['userId' => Auth::id()], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
 
         // Ensure user is authenticated - this helps with session restoration
         $user = Auth::user();
 
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'B', 'location' => 'Client/DashboardController.php:20', 'message' => 'User check completed', 'data' => ['hasUser' => !is_null($user), 'userId' => $user?->id], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
 
         if (!$user) {
             // If user is not authenticated, redirect to login
@@ -85,9 +83,8 @@ class DashboardController extends Controller
 
         $currentRate = Rate::latest()->first();
 
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'B', 'location' => 'Client/DashboardController.php:79', 'message' => 'Returning dashboard view', 'data' => ['hasStats' => !empty($stats), 'hasRecentDocuments' => !empty($recentDocuments), 'hasRecentTransactions' => !empty($recentTransactions)], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
 
         // Vault Capacity Logic
         $userVaultsCount = $user->vaults()->count();

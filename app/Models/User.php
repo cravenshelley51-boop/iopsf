@@ -125,9 +125,8 @@ class User extends Authenticatable
     protected function getCachedRoles(): array
     {
         return Cache::remember("user.{$this->id}.roles", 3600, function () {
-            // #region agent log
-            file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'A', 'location' => 'User.php:99', 'message' => 'Fetching roles from database', 'data' => ['userId' => $this->id], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-            // #endregion
+
+
             return $this->roles()->pluck('name')->toArray();
         });
     }
@@ -137,15 +136,13 @@ class User extends Authenticatable
      */
     public function hasRole(string $roleName): bool
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'A', 'location' => 'User.php:100', 'message' => 'hasRole called, checking cache', 'data' => ['userId' => $this->id, 'roleName' => $roleName], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
         $roles = $this->getCachedRoles();
         $hasRole = in_array($roleName, $roles);
 
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'A', 'location' => 'User.php:105', 'message' => 'hasRole result from cache', 'data' => ['userId' => $this->id, 'roleName' => $roleName, 'hasRole' => $hasRole, 'cachedRoles' => $roles], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
 
         return $hasRole;
     }
@@ -155,9 +152,8 @@ class User extends Authenticatable
      */
     public function isClient(): bool
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'A', 'location' => 'User.php:100', 'message' => 'isClient called', 'data' => ['userId' => $this->id], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
         return $this->hasRole(self::ROLE_CLIENT);
     }
 
@@ -166,9 +162,8 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        // #region agent log
-        file_put_contents('/Users/liam/Desktop/fidget/iopsf/securevault/.cursor/debug.log', json_encode(['sessionId' => 'debug-session', 'runId' => 'run1', 'hypothesisId' => 'A', 'location' => 'User.php:108', 'message' => 'isAdmin called', 'data' => ['userId' => $this->id], 'timestamp' => time() * 1000]) . "\n", FILE_APPEND);
-        // #endregion
+
+
         return $this->hasRole(self::ROLE_ADMIN);
     }
 }
