@@ -31,12 +31,9 @@ class Role extends Model
         return $this->belongsToMany(User::class);
     }
 
-    /**
-     * Check if the role is an admin role.
-     */
     public function isAdmin(): bool
     {
-        return $this->name === 'ADMIN';
+        return $this->name === self::ADMIN;
     }
 
     /**
@@ -44,6 +41,6 @@ class Role extends Model
      */
     public function isClient(): bool
     {
-        return $this->name === 'CLIENT';
+        return $this->name === self::CLIENT;
     }
 }
