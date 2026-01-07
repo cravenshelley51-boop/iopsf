@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified', 'client'])->group(function () {
 
     // Two-factor authentication routes
     Route::get('/two-factor/enable', [TwoFactorController::class, 'showEnableForm'])->name('two-factor.enable');
-    Route::post('/two-factor/enable', [TwoFactorController::class, 'enable'])->name('two-factor.enable');
+    Route::post('/two-factor/enable', [TwoFactorController::class, 'enable'])->name('two-factor.enable.store');
     Route::post('/two-factor/disable', [TwoFactorController::class, 'disable'])->name('two-factor.disable');
 
     // Notification settings routes

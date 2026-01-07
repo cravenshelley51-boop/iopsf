@@ -44,7 +44,7 @@
                             <p class="mt-2 font-mono bg-gray-100 p-2 rounded">{{ $secretKey }}</p>
                         </div>
 
-                        <form method="POST" action="{{ route('two-factor.enable') }}" class="space-y-6">
+                        <form method="POST" action="{{ route('two-factor.enable.store') }}" class="space-y-6">
                             @csrf
                             <input type="hidden" name="secret" value="{{ $secretKey }}">
                             

@@ -26,8 +26,10 @@ php artisan route:clear
 
 # Optimize for production
 php artisan config:cache
-php artisan route:cache
 php artisan view:cache
+
+# Cache routes (skip if it fails to avoid breaking deployment)
+php artisan route:cache || echo "Warning: Route caching failed, continuing without route cache..."
 
 # Set proper permissions
 chown -R www-data:www-data storage bootstrap/cache
