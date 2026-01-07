@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: securevault
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: LOG_LEVEL
+        value: error
+      - key: AUTO_MIGRATE
+        value: true
+      # Add your database connection variables here
+      # - key: DB_CONNECTION
+      #   value: mysql
+      # - key: DB_HOST
+      #   sync: false
+      # - key: DB_PORT
+      #   value: 3306
+      # - key: DB_DATABASE
+      #   sync: false
+      # - key: DB_USERNAME
+      #   sync: false
+      # - key: DB_PASSWORD
+      #   sync: false
+    healthCheckPath: /
+    # Uncomment and configure if using a database
+    # database:
+    #   name: securevault-db
+    #   databaseName: securevault
+    #   user: securevault
+
