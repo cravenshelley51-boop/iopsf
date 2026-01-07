@@ -13,6 +13,18 @@ if [ -z "$APP_KEY" ]; then
     php artisan key:generate --force
 fi
 
+# Ensure database directory exists and is writable
+mkdir -p database
+chown -R www-data:www-data database
+chmod -R 775 database
+
+# Create SQLite database file if it doesn't exist
+if [ ! -f database/database.sqlite ]; then
+    touch database/database.sqlite
+    chown www-data:www-data database/database.sqlite
+    chmod 664 database/database.sqlite
+fi
+
 # Run migrations (only if AUTO_MIGRATE is set to true)
 if [ "$AUTO_MIGRATE" = "true" ]; then
     php artisan migrate --force
@@ -32,8 +44,14 @@ php artisan view:cache
 php artisan route:cache || echo "Warning: Route caching failed, continuing without route cache..."
 
 # Set proper permissions
-chown -R www-data:www-data storage bootstrap/cache
-chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache database
+chmod -R 775 storage bootstrap/cache database
+
+# Ensure database file permissions are correct
+if [ -f database/database.sqlite ]; then
+    chown www-data:www-data database/database.sqlite
+    chmod 664 database/database.sqlite
+fi
 
 # Execute the main command
 exec "$@"

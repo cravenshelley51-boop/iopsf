@@ -54,9 +54,10 @@ RUN php artisan config:clear && \
 RUN mkdir -p storage/framework/{sessions,views,cache} \
     storage/logs \
     bootstrap/cache \
+    database \
     /var/log/supervisor \
-    && chown -R www-data:www-data storage bootstrap/cache \
-    && chmod -R 775 storage bootstrap/cache
+    && chown -R www-data:www-data storage bootstrap/cache database \
+    && chmod -R 775 storage bootstrap/cache database
 
 # Copy nginx configuration
 RUN rm -f /etc/nginx/sites-enabled/default
