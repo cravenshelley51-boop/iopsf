@@ -10,7 +10,6 @@ class Rate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'currency',
         'rate',
         'valid_from',
         'valid_to',
@@ -21,4 +20,4 @@ class Rate extends Model
         'valid_from' => 'datetime',
         'valid_to' => 'datetime',
     ];
-} 
+}
