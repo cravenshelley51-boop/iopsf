@@ -9,13 +9,27 @@ RUN npm run build
 # Stage 2 - Backend (Laravel + PHP + Composer)
 FROM php:8.2-fpm AS backend
 
-# Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y \
-    git curl unzip libpq-dev libzip-dev zip \
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    unzip \
+    zip \
+    nginx \
+    supervisor \
+    libpq-dev \
+    libonig-dev \
+    libzip-dev \
     libsqlite3-dev \
-    nginx supervisor \
-    && docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring zip opcache \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install -j$(nproc) \
+    pdo \
+    pdo_sqlite \
+    mbstring \
+    zip \
+    opcache
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
