@@ -28,6 +28,7 @@ class User extends Authenticatable
         'two_factor_secret',
         'two_factor_enabled',
         'notification_settings',
+        'last_login_at',
     ];
 
     protected $hidden = [
