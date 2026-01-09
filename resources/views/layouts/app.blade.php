@@ -119,7 +119,7 @@
 
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <x-dropdown-link :href="route('logout')"
+                                    <x-dropdown-link href="#"
                                         onclick="event.preventDefault(); this.closest('form').submit();"
                                         class="flex items-center gap-2 group text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10">
                                         <svg class="w-4 h-4 text-red-400 group-hover:text-red-600 transition-colors"
@@ -185,7 +185,7 @@
                         </x-responsive-nav-link>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <x-responsive-nav-link :href="route('logout')"
+                            <x-responsive-nav-link href="#"
                                 onclick="event.preventDefault(); this.closest('form').submit();"
                                 class="text-red-500 rounded-2xl border-none">
                                 {{ __('Secure Logout') }}

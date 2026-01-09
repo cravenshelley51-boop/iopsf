@@ -130,7 +130,7 @@
                                     <!-- Authentication -->
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <x-dropdown-link :href="route('logout')"
+                                        <x-dropdown-link href="#"
                                             onclick="event.preventDefault(); this.closest('form').submit();"
                                             class="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10">
                                             <div class="flex items-center">
